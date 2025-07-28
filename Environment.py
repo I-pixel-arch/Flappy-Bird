@@ -3,6 +3,7 @@ import neat
 import time
 import os
 import random
+import pickle
 pygame.font.init()
 
 WIN_WIDTH, WIN_HEIGHT = 550, 800

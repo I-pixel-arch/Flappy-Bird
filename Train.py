@@ -1,4 +1,4 @@
-from Bird import Bird
+from './objects/Bird.py' import Bird
 from Pipe import Pipe
 from Base import Base
 from Background import Background
@@ -47,6 +47,11 @@ def eval_genomes(genomes, config):
     while running:
         # Game FPS
         clock.tick(30)
+
+        # Break after best gene
+        if objects[5] >= 100:
+            running = False
+            break
 
         # Close game if window closed
         for event in pygame.event.get():
@@ -124,6 +129,7 @@ def eval_genomes(genomes, config):
         
         # Draw the objects
         draw_window(objects)
+            
     
 # Run NEAT
 def run(config_path):
@@ -134,7 +140,12 @@ def run(config_path):
     p.add_reporter(neat.StdOutReporter(True))
     p.add_reporter(neat.StatisticsReporter())
 
-    winner = p.run(eval_genomes, 50)
+    winner = p.run(eval_genomes, 10)
+    # Save model
+    file = open('model', 'wb')
+    pickle.dump(winner, file)
+    file.close()
+
     
 # Calling main
 if __name__ == "__main__":
