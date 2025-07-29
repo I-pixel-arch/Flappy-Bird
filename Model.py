@@ -17,7 +17,7 @@ def draw_window(objects):
     win.blit(text, (WIN_WIDTH - 10 - text.get_width(), 10))
     pygame.display.update()
 
-def eval_genomes(genomes, config):
+def game(genomes, config):
     # Genes
     birds = []
     nets = []
@@ -140,12 +140,12 @@ def run(config_path):
     p.add_reporter(neat.StdOutReporter(True))
     p.add_reporter(neat.StatisticsReporter())
 
-    winner = p.run(eval_genomes, 10)
-    # Save model
-    with open('model','wb') as file:
-        pickle.dump(winner)
-        file.close()
+    with open('model','rb') as f:
+        genomes = pickle.load(f)
+    
+    genomes = [(1, genomes)]
 
+    game(genomes, config)
     
 # Calling main
 if __name__ == "__main__":
